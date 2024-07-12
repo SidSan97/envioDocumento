@@ -1,0 +1,125 @@
+#app {
+    text-align: start;
+  }
+  
+  body,
+  html {
+    min-height: 100vh;
+  }
+  
+  //scrolls
+  body::-webkit-scrollbar,
+  .parcs-product-shopping-cart::-webkit-scrollbar,
+  .content-products::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  .parcs-product-shopping-cart::-webkit-scrollbar-track,
+  .content-products::-webkit-scrollbar-track {
+    background: rgba(255, 166, 0, 0);
+  }
+  
+  body::-webkit-scrollbar-thumb,
+  .parcs-product-shopping-cart::-webkit-scrollbar-thumb,
+  .content-products::-webkit-scrollbar-thumb {
+    background-color: #b3b3b3;
+    border-radius: 2px;
+    border: 1px solid rgba(255, 166, 0, 0);
+  }
+  
+  .m-pointer {
+    cursor: pointer;
+  }
+  
+  .break-line {
+    white-space: pre;
+  }
+  
+  .std-bi-icon {
+    color: #000;
+    font-size: 20px;
+  }
+  
+  .icon-disabled {
+    opacity: 0.2;
+  }
+  
+  .hover:hover {
+    opacity: 0.2;
+  }
+  
+  .stripped {
+    background-color: #ececec;
+  }
+  
+  .pointer {
+    cursor: pointer;
+  }
+  
+  //##### controle-de-obras ####
+  .list-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 155px;
+    padding: 10px 5px;
+    text-align: center;
+    font-size: 13px;
+  }
+  
+  .not-scroll {
+    overflow: hidden;
+  }
+  
+  .vm--container {
+    z-index: 1050 !important;
+    padding: 20px 20px !important;
+  }
+  .vm--modal {
+    border-radius: 10px !important;
+  }
+  
+  .vm--modal-footer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.75rem;
+    border-top: 1px solid #dee2e6;
+    border-bottom-right-radius: calc(0.3rem - 1px);
+    border-bottom-left-radius: calc(0.3rem - 1px);
+  }
+  
+  .modal-container {
+    display: block !important;
+    z-index: 1035 !important;
+    align-items: start !important;
+    min-height: 100vh !important;
+    overflow-y: auto !important;
+    height: 100% !important;
+    padding: 35px 0px !important;
+    background-color: #3e3e3e69 !important;
+  }
+  
+  .modal-item {
+    background-color: #fefefe;
+    margin: 1% auto;
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px #00000094;
+  }
+  
+  .modal-item:has(.modal-380) {
+    width: 380px;
+  }
+  .modal-item:has(.modal-480) {
+    width: 480px;
+  }
+  .modal-item:has(.modal-830) {
+    width: 830px;
+  }

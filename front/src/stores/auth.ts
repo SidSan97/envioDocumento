@@ -27,7 +27,7 @@ export const useAuthStore = defineStore('auth', {
                             'Authorization': `Bearer ${this.token}`
                         }
                     });
-                } catch (error) {
+                } catch (error: any) {
                     console.error('Erro ao fazer logout:', error.response);
                 }
             }

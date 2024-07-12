@@ -21,16 +21,24 @@ Route::post('/login', function (Request $request) {
 
     $user = User::where('email', $credentials['email'])->first();
 
+
     if (!$user || !Hash::check($credentials['password'], $user->password)) {
-        return response()->json(['message' => 'Invalid credentials'], 401);
+        return response()->json(['message' => 'Credenciais Inválidas'], 401);
     }
 
     $token = $user->createToken('authToken')->plainTextToken;
 
-    return response()->json(['token' => $token]);
+    return response()->json([
+        'token' => $token,
+        'user' => [
+            'id' => $user->id_user,
+            'name' => $user->name,
+            'id_cargo' => $user->id_cargo,
+        ]
+    ]);
 });
 
 Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
     $request->user()->currentAccessToken()->delete();
-    return response()->json(['message' => 'Logged out']);
+    return response()->json(['message' => 'Deslogado com sucesso!']);
 });

@@ -14,7 +14,9 @@
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
     "bootstrap-vue": "^2.23.1",
+    "jenesius-vue-modal": "^1.11.8",
     "pinia": "^2.1.7",
+    "sass": "^1.77.8",
     "vue": "^3.4.31",
     "vue-router": "^4.3.3"
   },
