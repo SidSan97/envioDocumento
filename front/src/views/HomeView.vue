@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Página home</h1>
+    <h1>Escolha uma opção</h1>
     <nav>
       <button @click="logout">Logout</button>
     </nav>
