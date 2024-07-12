@@ -1,5 +1,10 @@
 <?php
 
+$scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    
+$host = $_SERVER['HTTP_HOST'];
+$baseUrl = $scheme . '://' . $host;
+
 return [
 
     /*
@@ -19,7 +24,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [$baseUrl],
 
     'allowed_origins_patterns' => [],
 
