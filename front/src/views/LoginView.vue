@@ -52,8 +52,6 @@ export default {
             } catch (err) {
                 this.error = 'Email ou senha incorretos.'; 
             }
-
-            return { authStore, router };
         },
     }
 };

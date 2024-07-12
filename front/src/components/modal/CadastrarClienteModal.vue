@@ -25,8 +25,6 @@
                     <label for="telefone">Telefone</label>
                     <input v-model="telefone" type="tel" class="form-control" id="telefone" placeholder="Digite seu telefone">
                 </div>
-
-                aaaa: {{ user.id_user }}
         
                 <button @click="submit()" class="btn btn-primary">Registrar</button>
             </form>
@@ -59,14 +57,14 @@
         setup() {
             const authStore = useAuthStore();
            
-        return {
-            user: 
-                authStore.user,
-                logout: authStore.logout
+            return {
+                user: 
+                    authStore.user,
+                    logout: authStore.logout
             };
         },
         created() {
-            this.teste();
+        
         },
         methods: {
 
@@ -79,11 +77,11 @@
                     cnpj_cpf: this.cnpj_cpf,
                     telefone: this.telefone,
                     cliente_ativo: 1,
-                    id_user: 1
+                    id_user: this.user.id
                 }
 
                 try {
-                    const response = await axios.post('http://localhost/calendar/backend/public/api/novo-evento', formData);
+                    const response = await axios.post('http://localhost/envioDocumento/backend/public/api/cadastrar-cliente', formData);
 
                     this.responseMessage = response.data.message;
                 } catch (error: any) {
@@ -99,9 +97,6 @@
                     //swalSuccess("Evento criado com sucesso!");
                 }
             },
-            teste(){
-                console.log(useAuthStore);
-            }
         },
     }
 </script>
