@@ -3,12 +3,28 @@
   <div class="container">
     <h1>Escolha uma opção</h1>
 
-    <div class="row">
-      <div class="col-lg-6 p-3">
+    <div class="row w-100">
+      <div class="col-lg-3 p-3 bg-success">
         <div class="mb-4 menu-painel" @click="modalCadastroCliente();">         
           <i class="fas fa-rss-square"></i>
           <br>
           <span>CADASTRAR CLIENTE</span>
+        </div>
+      </div>
+
+      <div class="col-lg-3 p-3 bg-danger">
+        <div class="mb-4 menu-painel" @click="modalCadastroCliente();">         
+          <i class="fas fa-rss-square"></i>
+          <br>
+          <span>ENVIAR DECLARAÇÃO</span>
+        </div>
+      </div>
+
+      <div class="col-lg-3 p-3 bg-warning">
+        <div class="mb-4 menu-painel" @click="modalCadastroCliente();">         
+          <i class="fas fa-rss-square"></i>
+          <br>
+          <span>SUBIR DECLARAÇÃO</span>
         </div>
       </div>
     </div>
@@ -59,7 +75,7 @@ export default {
   methods: {
 
     modalCadastroCliente() {
-      openModal(CadastrarClienteModal)
+      pushModal(CadastrarClienteModal)
     }
   }
 };
