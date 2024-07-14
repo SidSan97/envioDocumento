@@ -1,23 +1,29 @@
 <template>
-    <div>
-        <ModalHeader
-        :title="'Upload de arquivos'"
-        @close="$emit('close')"
-        />
+  <div>
+    <ModalHeader
+    :title="'Upload de arquivos'"
+    @close="$emit('close')"
+    />
 
-      <h1>Upload de Arquivo</h1>
-      <form @submit.prevent="uploadFile">
-        <input type="file" @change="onFileChange" />
-        <button type="submit">Upload</button>
-      </form>
-      <div v-if="uploadPath">
-        <p>Arquivo carregado com sucesso!</p>
-        <a :href="`http://localhost/envioDocumento/backend/public/api/storage/${uploadPath}`" target="_blank">Ver arquivo</a>
-      </div>
+    <h1>Upload de Arquivo</h1>
+
+    <form @submit.prevent="uploadFile">
+      <input type="file" @change="onFileChange" />
+      <button type="submit">Upload</button>
+    </form>
+
+    <div v-if="uploadPath" class="alert alert-success" role="alert">
+      <p>Arquivo carregado com sucesso!</p>
+      <a :href="`http://localhost/envioDocumento/backend/public/storage/${uploadPath}`" target="_blank">Ver arquivo</a>
     </div>
-  </template>
+
+    <div v-if="error" class="alert alert-danger" role="alert">
+      {{ error }}
+    </div>
+  </div>
+</template>
   
-  <script>
+<script>
   import axios from 'axios';
   import ModalHeader from '../ModalHeader.vue';
 
@@ -52,10 +58,12 @@
               'Content-Type': 'multipart/form-data'
             }
           });
+          console.log(response.data)
           this.uploadPath = response.data.path;
           this.error = null;
+
         } catch (err) {
-          this.error = 'Erro ao fazer upload do arquivo';
+          this.error = err.response.data.error;
           console.error(err);
         }
       }
