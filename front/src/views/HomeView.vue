@@ -21,7 +21,7 @@
       </div>
 
       <div class="col-lg-3 p-3 bg-warning">
-        <div class="mb-4 menu-painel" @click="modalCadastroCliente();">         
+        <div class="mb-4 menu-painel" @click="modalFileUpload();">         
           <i class="fas fa-rss-square"></i>
           <br>
           <span>SUBIR DECLARAÇÃO</span>
@@ -48,11 +48,13 @@
 import { useAuthStore } from '../stores/auth';
 import { useRouter } from 'vue-router';
 import CadastrarClienteModal from '@/components/modal/CadastrarClienteModal.vue';
+import FileUploadModal from '@/components/modal/FileUploadModal.vue';
 import { pushModal, openModal } from 'jenesius-vue-modal';
 
 export default {
   components: {
     CadastrarClienteModal,
+    FileUploadModal,
   },
   data() {
     return {
@@ -76,7 +78,11 @@ export default {
 
     modalCadastroCliente() {
       pushModal(CadastrarClienteModal)
-    }
+    },
+
+    modalFileUpload(){
+      pushModal(FileUploadModal)
+    },
   }
 };
 </script>

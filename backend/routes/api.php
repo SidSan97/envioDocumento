@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\UsuarioController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/cadastrar-cliente', [ClienteController::class, 'cadastro']);
+Route::post('/upload', [UsuarioController::class, 'upload']);
 
 Route::post('/login', function (Request $request) {
     $credentials = $request->only('email', 'password');
@@ -45,3 +47,5 @@ Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
     $request->user()->currentAccessToken()->delete();
     return response()->json(['message' => 'Deslogado com sucesso!']);
 });
+
+
