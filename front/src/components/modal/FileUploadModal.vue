@@ -26,6 +26,7 @@
 <script>
   import axios from 'axios';
   import ModalHeader from '../ModalHeader.vue';
+  import { useAuthStore } from '../../stores/auth';
 
   export default {
     name: 'FileUploadModal',
@@ -37,6 +38,15 @@
         file: null,
         uploadPath: null,
         error: null
+      };
+    },
+    setup() {
+      const authStore = useAuthStore();
+      
+      return {
+        user: 
+          authStore.user,
+          logout: authStore.logout
       };
     },
     methods: {
@@ -51,6 +61,7 @@
   
         let formData = new FormData();
         formData.append('file', this.file);
+        formData.append('id', this.user.id);
   
         try {
           const response = await axios.post('http://localhost/envioDocumento/backend/public/api/upload', formData, {
@@ -58,7 +69,7 @@
               'Content-Type': 'multipart/form-data'
             }
           });
-          console.log(response.data)
+
           this.uploadPath = response.data.path;
           this.error = null;
 

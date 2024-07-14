@@ -24,4 +24,11 @@ class ClienteController extends Controller
             return  response()->json([ 'error' => "Falha ao cadastrar cliente"], 500);
         }
     }
+
+    public function pegarDadosClientePorDocumento(string $data, int $id)
+    {
+        $cliente = ClienteModel::where('cpf_cnpj', $data)->whereIn('id_user', $id)->first();
+
+        return $cliente;
+    }
 }

@@ -81,7 +81,7 @@ export default {
     },
 
     modalFileUpload(){
-      pushModal(FileUploadModal)
+      pushModal(FileUploadModal/*, {idUser: authS}*/)
     },
   }
 };

@@ -21,15 +21,19 @@ class DocumentosController extends Controller
             }
             
             $path = $file->store('uploads', 'public');
-            $var = $this->lerCnpjPDF($path);
+            $dados = $this->lerDadosPDF($path);
 
-            return response()->json(['path' => $path, 'cnpj'=>$var], 200);
+            if($dados) {
+                
+            }
+
+            return response()->json(['path' => $path], 200);
         }
 
         return response()->json(['error' => 'No file uploaded'], 400);
     }
 
-    public function lerCnpjPDF($path)
+    public function lerDadosPDF(string $path)
     {
         $caminho = "http://localhost//envioDocumento/backend//public/storage//";
 
@@ -45,7 +49,7 @@ class DocumentosController extends Controller
             $razaoSocial = trim($matches[1]);
             return $razaoSocial;
         } else {
-            return '';
+            return false;
         }
     }
 }
