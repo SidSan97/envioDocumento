@@ -64,7 +64,7 @@
         formData.append('id', this.user.id);
   
         try {
-          const response = await axios.post('http://localhost/envioDocumento/backend/public/api/upload', formData, {
+          const response = await axios.post('http://localhost/envioDocumento/backend/public/api/enviar-documento', formData, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }

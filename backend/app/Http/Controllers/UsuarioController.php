@@ -34,20 +34,25 @@ class UsuarioController extends Controller
                 return response()->json(['error' => 'Você não possui clientes com esse CNPJ/CPF cadastrado no sistema.'], 404);
             }
 
-            $data = [
+            $email       = new EnvioEmailController();
+            $statusEmail = $email->enviarEmail($dadosCliente);
+
+            /*$data = [
                 'fromName' => 'grupo dbf',
                 'fromEmail' => 'diretoria@email.com',
                 'subject' => 'Envio do seu imposto de renda',
                 'message' => 'Teste de email'
-            ];
+            ];*/
             //dd($data);
 
-            Mail::to('sidnei1.8santiago@hotmail.com', 'Contabilizei')
-            ->send(new EnvioEmailDocumentos($data['fromName'], $data['fromEmail'], $data['subject'], $data['message']));
+            //Mail::to('sidnei1.8santiago@hotmail.com', 'Contabilizei')
+            //->send(new EnvioEmailDocumentos($data['fromName'], $data['fromEmail'], $data['subject'], $data['message']));
+
+
 
             //var_dump('enviado', $send);
 
-            return response()->json(['Documento enviado com sucesso' => $upload['diretorio']/*, 'dados'=>$send*/], 200);
+            return response()->json(['Documento enviado com sucesso' => $upload['diretorio'], 'dados'=>$statusEmail], 200);
         }
 
         return response()->json(['error' => 'No file uploaded'], 400);
