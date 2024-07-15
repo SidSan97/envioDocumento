@@ -27,7 +27,7 @@ class ClienteController extends Controller
 
     public function pegarDadosClientePorDocumento(string $data, int $id)
     {
-        $cliente = ClienteModel::where('cpf_cnpj', $data)->whereIn('id_user', [$id])->get();
+        $cliente = ClienteModel::where('cpf_cnpj', $data)->whereIn('id_user', [$id])->get()->first();
 
         return $cliente;
     }

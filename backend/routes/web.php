@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\UsuarioController;
+use App\Mail\EnvioEmailDocumentos;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +19,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/envioDocumento', function () {
+    /*$var = ['message' => "msg"];
+    Mail::send('emails.envioDocumento', ['data' => 'curso'], function($m) {
+        $m->from('sidnei1000grauocara@hotmail.com', 'Sidnei');
+        $m->to('sidnei1.8santiago@hotmail.com');
+    });*/
+
+});
+

@@ -2,38 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\Request;
 use Smalot\PdfParser\Parser;
 
 class DocumentosController extends Controller
 {
-    public function upload(Request $request)
+    public function upload($file)
     {
-        if ($request->hasFile('file')) {
 
-            $file = $request->file('file');
-            $extensoesPermitidas = ['pdf'];
-            $extensao = $file->getClientOriginalExtension();
+        $extensoesPermitidas = ['pdf'];
+        $extensao = $file->getClientOriginalExtension();
 
-            if(!in_array($extensao, $extensoesPermitidas)) {
-                return response()->json(['error' => 'Formato não permitido'], 415);
-            }
-
-            $path = $file->store('uploads', 'public');
-            $dados = $this->lerDadosPDF($path);
-
-            if(!$dados) {
-                return response()->json(['error' => 'Não foi possível ler PDF.'], 404);
-            }
-
-            $cliente      = new ClienteController();
-            $dadosCliente = $cliente->pegarDadosClientePorDocumento($dados, $request->id);
-
-            return response()->json(['path' => $path, 'dados'=>$dadosCliente], 200);
+        if(!in_array($extensao, $extensoesPermitidas)) {
+            return ['error' => "Formato de arquivo não permitido.", 'status' => 415];
         }
 
-        return response()->json(['error' => 'No file uploaded'], 400);
+        $path = $file->store('uploads', 'public');
+
+        return ['diretorio' => $path];
+
+
+       // return response()->json(['path' => $path, 'dados'=>$dadosCliente], 200);*/
+
     }
 
     public function lerDadosPDF(string $path)
