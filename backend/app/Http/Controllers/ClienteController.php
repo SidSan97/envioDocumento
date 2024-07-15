@@ -18,16 +18,16 @@ class ClienteController extends Controller
         $cliente->cliente_ativo = 1;
         $cliente->id_user = $request->id_user;
 
-        if($cliente->save()){
-            return  response()->json([ 'message' => "Cliente cadastrado com sucesso"], 201);
-        }else {
+        if(!$cliente->save()) {
             return  response()->json([ 'error' => "Falha ao cadastrar cliente"], 500);
         }
+
+        return  response()->json([ 'message' => "Cliente cadastrado com sucesso"], 201);
     }
 
     public function pegarDadosClientePorDocumento(string $data, int $id)
     {
-        $cliente = ClienteModel::where('cpf_cnpj', $data)->whereIn('id_user', $id)->first();
+        $cliente = ClienteModel::where('cpf_cnpj', $data)->whereIn('id_user', [$id])->get();
 
         return $cliente;
     }
