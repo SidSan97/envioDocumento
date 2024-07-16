@@ -13,20 +13,15 @@ class EnvioEmailDocumentos extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $nome;
-    public $email;
-    public $assunto;
-    public $msg;
+    public $data;
+   
 
     /**
      * Create a new message instance.
      */
-    public function __construct($nome, $email, $assunto, $msg)
+    public function __construct($dados)
     {
-        $this->nome = $nome;
-        $this->email = $email;
-        $this->assunto = $assunto;
-        $this->msg = $msg;
+        $this->data = $dados;
     }
 
     /**
@@ -35,8 +30,8 @@ class EnvioEmailDocumentos extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->assunto,
-            from: new Address($this->email, $this->nome),
+            subject: $this->data['subject'],
+            from: new Address($this->data['fromEmail'], $this->data['fromName']),
         );
     }
 
@@ -48,7 +43,7 @@ class EnvioEmailDocumentos extends Mailable
         return new Content(
             view: 'emails.envioDocumento',
             with: [
-                'message' => $this->msg,
+                'message' => $this->data['message'],
             ]
         );
     }

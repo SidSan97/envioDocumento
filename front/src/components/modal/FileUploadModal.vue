@@ -13,7 +13,7 @@
     </form>
 
     <div v-if="uploadPath" class="alert alert-success" role="alert">
-      <p>Arquivo carregado com sucesso!</p>
+      <p>{{ message }}</p>
       <a :href="`http://localhost/envioDocumento/backend/public/storage/${uploadPath}`" target="_blank">Ver arquivo</a>
     </div>
 
@@ -37,7 +37,8 @@
       return {
         file: null,
         uploadPath: null,
-        error: null
+        error: null,
+        message: null,
       };
     },
     setup() {
@@ -71,10 +72,12 @@
           });
 
           this.uploadPath = response.data.path;
-          this.error = null;
+          this.message    = response.data.message;
+          this.error      = null;
 
         } catch (err) {
-          this.error = err.response.data.error;
+          this.message = null;
+          this.error   = err.response.data.error;
           console.error(err);
         }
       }

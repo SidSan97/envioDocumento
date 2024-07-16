@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\EnvioEmailDocumentos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class UsuarioController extends Controller
 {
@@ -21,38 +21,38 @@ class UsuarioController extends Controller
                 return response()->json(['error' => $upload['error']], $upload['status']);
             }
 
-            $dados = $doc->lerDadosPDF($upload['diretorio']);
+            $dadosPDF = $doc->lerDadosPDF($upload['diretorio']);
 
-            if(!$dados) {
+            if(!$dadosPDF) {
                 return response()->json(['error' => 'Não foi possível ler PDF.'], 400);
             }
 
             $cliente      = new ClienteController();
-            $dadosCliente = $cliente->pegarDadosClientePorDocumento($dados, $request->id);
+            $dadosCliente = $cliente->pegarDadosClientePorDocumento($dadosPDF['documento'], $request->id);
 
             if(!$dadosCliente) {
                 return response()->json(['error' => 'Você não possui clientes com esse CNPJ/CPF cadastrado no sistema.'], 404);
             }
 
-            $email       = new EnvioEmailController();
-            $statusEmail = $email->enviarEmail($dadosCliente);
+            $dados = [
+                'fromName' => 'Contabilizei',
+                'fromEmail' => 'contatosidsan@sidneidev.com.br',
+                'subject' => 'IMPOSTO DE RENDA',
+                'message' => 'Olá, ' . $dadosCliente['nome'] .'. Seu documento já se encontra disponível em anexo.',
+                'recipientEmail' => $dadosCliente['email'],
+                'recipientName' => $dadosCliente['nome'],
+            ];
 
-            /*$data = [
-                'fromName' => 'grupo dbf',
-                'fromEmail' => 'diretoria@email.com',
-                'subject' => 'Envio do seu imposto de renda',
-                'message' => 'Teste de email'
-            ];*/
-            //dd($data);
+            $pathToFile = Storage::path('public\\' . $upload['diretorio']);
 
-            //Mail::to('sidnei1.8santiago@hotmail.com', 'Contabilizei')
-            //->send(new EnvioEmailDocumentos($data['fromName'], $data['fromEmail'], $data['subject'], $data['message']));
+            $send = Mail::raw($dados['message'], function ($message) use ($dados, $pathToFile) {
+                $message->from($dados['fromEmail'], $dados['fromName']);
+                $message->to($dados['recipientEmail'], $dados['recipientName'])
+                        ->subject($dados['subject'])
+                        ->attach($pathToFile);
+            });
 
-
-
-            //var_dump('enviado', $send);
-
-            return response()->json(['Documento enviado com sucesso' => $upload['diretorio'], 'dados'=>$statusEmail], 200);
+            return response()->json(['message' => 'Documento enviado com sucesso', 'path' => $upload['diretorio']], 200);
         }
 
         return response()->json(['error' => 'No file uploaded'], 400);

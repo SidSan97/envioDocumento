@@ -20,12 +20,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/envioDocumento', function () {
-    /*$var = ['message' => "msg"];
-    Mail::send('emails.envioDocumento', ['data' => 'curso'], function($m) {
-        $m->from('sidnei1000grauocara@hotmail.com', 'Sidnei');
-        $m->to('sidnei1.8santiago@hotmail.com');
-    });*/
-
-});
 

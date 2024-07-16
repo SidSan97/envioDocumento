@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/cadastrar-cliente', [ClienteController::class, 'cadastro']);
-//Route::post('/upload', [DocumentosController::class, 'upload']);
 Route::post('/enviar-documento', [UsuarioController::class, 'envioDocumento']);
 
 Route::post('/login', function (Request $request) {

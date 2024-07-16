@@ -8,7 +8,6 @@ class DocumentosController extends Controller
 {
     public function upload($file)
     {
-
         $extensoesPermitidas = ['pdf'];
         $extensao = $file->getClientOriginalExtension();
 
@@ -16,22 +15,20 @@ class DocumentosController extends Controller
             return ['error' => "Formato de arquivo não permitido.", 'status' => 415];
         }
 
-        $path = $file->store('uploads', 'public');
+        $nomeArquivo = 'Documento_Arrecadacao_' . date('Y') . '_' .time() . '.' . $extensao;
+        $path = $file->storeAs('uploads', $nomeArquivo ,'public');
 
         return ['diretorio' => $path];
-
-
-       // return response()->json(['path' => $path, 'dados'=>$dadosCliente], 200);*/
-
     }
 
     public function lerDadosPDF(string $path)
     {
         $caminho = str_replace('\\', '/', __DIR__);
         $caminho = preg_replace('/(backend).*/', '$1', $caminho);
+        $caminho = $caminho .'/public/storage/'. $path;
 
         $parser = new Parser();
-        $pdf = $parser->parseFile($caminho .'/public/storage/'. $path);
+        $pdf = $parser->parseFile($caminho);
 
         $data = $pdf->getText();
         $string_sem_espacos = str_replace(' ', '', $data);
@@ -40,7 +37,10 @@ class DocumentosController extends Controller
 
         if (isset($matches[1])) {
             $cpf_cnpj = trim($matches[1]);
-            return $cpf_cnpj;
+            return [
+                "documento" => $cpf_cnpj,
+                "diretorio" => $caminho
+            ];
         } else {
             return false;
         }
