@@ -10,4 +10,9 @@ class ClienteModel extends Model
     protected $table = 'dados_clientes';
     protected $primaryKey = 'id_cliente';
     use HasFactory;
+
+    public function documentos()
+    {
+        return $this->hasMany(DocumentoModel::class, 'id_cliente', 'id_cliente');
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DocumentoModel;
 use Smalot\PdfParser\Parser;
 
 class DocumentosController extends Controller
@@ -42,6 +43,21 @@ class DocumentosController extends Controller
                 "diretorio" => $caminho
             ];
         } else {
+            return false;
+        }
+    }
+
+    public function cadastrarPDF(string $caminho, int $id_cliente, int $id_user)
+    {
+        $doc = new DocumentoModel();
+
+        $doc->nome_doc = $caminho;
+        $doc->id_td = 1;
+        $doc->data_upload = date('Y-m-d H:i:s');
+        $doc->id_user = $id_user;
+        $doc->id_cliente = $id_cliente;
+
+        if(!$doc->save()){
             return false;
         }
     }

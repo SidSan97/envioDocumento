@@ -5,7 +5,7 @@
 
     <div class="row w-100">
       <div class="col-lg-3 p-3 bg-success">
-        <div class="mb-4 menu-painel" @click="modalCadastroCliente();">         
+        <div class="mb-4 menu-painel" @click="modalCadastroCliente()">         
           <i class="fas fa-rss-square"></i>
           <br>
           <span>CADASTRAR CLIENTE</span>
@@ -13,7 +13,7 @@
       </div>
 
       <div class="col-lg-3 p-3 bg-danger">
-        <div class="mb-4 menu-painel" @click="modalCadastroCliente();">         
+        <div class="mb-4 menu-painel" @click="modalFileUpload()">         
           <i class="fas fa-rss-square"></i>
           <br>
           <span>ENVIAR DECLARAÇÃO</span>
@@ -21,22 +21,13 @@
       </div>
 
       <div class="col-lg-3 p-3 bg-warning">
-        <div class="mb-4 menu-painel" @click="modalFileUpload();">         
+        <div class="mb-4 menu-painel" @click="modalOptions()">         
           <i class="fas fa-rss-square"></i>
           <br>
-          <span>SUBIR DECLARAÇÃO</span>
+          <span>OPÇÕES</span>
         </div>
       </div>
     </div>
-
-
-
-
-
-
-
-
-
 
     <nav>
       <button @click="logout">Logout</button>
@@ -49,12 +40,14 @@ import { useAuthStore } from '../stores/auth';
 import { useRouter } from 'vue-router';
 import CadastrarClienteModal from '@/components/modal/CadastrarClienteModal.vue';
 import FileUploadModal from '@/components/modal/FileUploadModal.vue';
+import UserOptionsModal from '@/components/modal/UserOptionsModal.vue';
 import { pushModal, openModal } from 'jenesius-vue-modal';
 
 export default {
   components: {
     CadastrarClienteModal,
     FileUploadModal,
+    UserOptionsModal,
   },
   data() {
     return {
@@ -75,13 +68,16 @@ export default {
     };
   },
   methods: {
-
     modalCadastroCliente() {
       pushModal(CadastrarClienteModal)
     },
 
     modalFileUpload(){
-      pushModal(FileUploadModal/*, {idUser: authS}*/)
+      pushModal(FileUploadModal)
+    },
+
+    modalOptions(){
+      pushModal(UserOptionsModal)
     },
   }
 };

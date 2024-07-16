@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/cadastrar-cliente', [ClienteController::class, 'cadastro']);
 Route::post('/enviar-documento', [UsuarioController::class, 'envioDocumento']);
+Route::get('/obter-documentos/{id}', [UsuarioController::class, 'obterDocumentos']);
 
 Route::post('/login', function (Request $request) {
     $credentials = $request->only('email', 'password');

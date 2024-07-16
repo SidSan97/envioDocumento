@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DocumentoModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -45,16 +46,25 @@ class UsuarioController extends Controller
 
             $pathToFile = Storage::path('public\\' . $upload['diretorio']);
 
-            $send = Mail::raw($dados['message'], function ($message) use ($dados, $pathToFile) {
+            Mail::raw($dados['message'], function ($message) use ($dados, $pathToFile) {
                 $message->from($dados['fromEmail'], $dados['fromName']);
                 $message->to($dados['recipientEmail'], $dados['recipientName'])
                         ->subject($dados['subject'])
                         ->attach($pathToFile);
             });
 
+            $doc->cadastrarPDF($upload['diretorio'], $dadosCliente['id_cliente'], $request->id);
+
             return response()->json(['message' => 'Documento enviado com sucesso', 'path' => $upload['diretorio']], 200);
         }
 
-        return response()->json(['error' => 'No file uploaded'], 400);
+        return response()->json(['error' => 'Não há arquivos para upload.'], 400);
+    }
+
+    public function obterDocumentos(int $id)
+    {
+        $documentos = DocumentoModel::select('data_upload', 'nome_doc')->with('cliente')->where('id_user', $id)->get();
+
+        return $documentos;
     }
 }
