@@ -15,19 +15,19 @@
 </template>
 
 <script lang="ts">
-    import ModalHeader from '../ModalHeader.vue';
+import ModalHeader from '../ModalHeader.vue';
 
-    export default {
-        name: 'UserOptionsModal',
-        components: {
-            ModalHeader,
-        },
-        data() {
-            return {
-                
-            }
-        },
-    }
+export default {
+    name: 'UserOptionsModal',
+    components: {
+        ModalHeader,
+    },
+    data() {
+        return {
+            
+        }
+    },
+}
 </script>
 
 <style scoped>

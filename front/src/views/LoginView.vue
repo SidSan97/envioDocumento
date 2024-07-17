@@ -46,11 +46,14 @@ export default {
     },
     methods: {
         async login() {
+            this.$loading.show()
             try {
                 await this.authStore.login(this.email, this.password);
                 this.router.push('/');
             } catch (err) {
                 this.error = 'Email ou senha incorretos.'; 
+            }finally {
+                this.$loading.hide();
             }
         },
     }

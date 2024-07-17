@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClienteModel;
 use App\Models\DocumentoModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -36,12 +37,12 @@ class UsuarioController extends Controller
             }
 
             $dados = [
-                'fromName' => 'Contabilizei',
+                'fromName'  => 'Automatiza Contabil',
                 'fromEmail' => 'contatosidsan@sidneidev.com.br',
-                'subject' => 'IMPOSTO DE RENDA',
+                'subject' => 'DOCUMENTO DE ARRECADAÇÃO',
                 'message' => 'Olá, ' . $dadosCliente['nome'] .'. Seu documento já se encontra disponível em anexo.',
                 'recipientEmail' => $dadosCliente['email'],
-                'recipientName' => $dadosCliente['nome'],
+                'recipientName'  => $dadosCliente['nome'],
             ];
 
             $pathToFile = Storage::path('public\\' . $upload['diretorio']);
@@ -63,7 +64,14 @@ class UsuarioController extends Controller
 
     public function obterDocumentos(int $id)
     {
-        $documentos = DocumentoModel::select('data_upload', 'nome_doc')->with('cliente')->where('id_user', $id)->get();
+        $documentos = DocumentoModel::select('data_upload', 'nome_doc', 'id_cliente')->where('id_user', $id)->get();
+
+        $documentos->transform(function ($item) {
+            $dadosCliente = ClienteModel::where('id_cliente', $item['id_cliente'])->get()->first();
+            $item['cliente'] = $dadosCliente;
+
+            return $item;
+        });
 
         return $documentos;
     }

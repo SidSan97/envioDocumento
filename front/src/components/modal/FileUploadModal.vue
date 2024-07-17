@@ -64,6 +64,7 @@
         formData.append('file', this.file);
         formData.append('id', this.user.id);
   
+        this.$loading.show()
         try {
           const response = await axios.post('http://localhost/envioDocumento/backend/public/api/enviar-documento', formData, {
             headers: {
@@ -79,6 +80,9 @@
           this.message = null;
           this.error   = err.response.data.error;
           console.error(err);
+
+        }finally {
+          this.$loading.hide();
         }
       }
     }
