@@ -8,13 +8,17 @@
     <h1>Upload de Arquivo</h1>
 
     <form @submit.prevent="uploadFile">
-      <input type="file" @change="onFileChange" />
+      <input type="file" @change="onFileChange" multiple />
       <button type="submit">Upload</button>
     </form>
 
-    <div v-if="uploadPath" class="alert alert-success" role="alert">
+    <div v-if="message" class="alert alert-success" role="alert">
       <p>{{ message }}</p>
-      <a :href="`http://localhost/envioDocumento/backend/public/storage/${uploadPath}`" target="_blank">Ver arquivo</a>
+
+      <p>
+        OBSERVAÇÕES: <br>
+        <span></span>
+      </p>
     </div>
 
     <div v-if="error" class="alert alert-danger" role="alert">
@@ -35,10 +39,11 @@
     },
     data() {
       return {
-        file: null,
+        files: [],
         uploadPath: null,
         error: null,
         message: null,
+        errorMultimidia: null
       };
     },
     setup() {
@@ -52,16 +57,18 @@
     },
     methods: {
       onFileChange(event) {
-        this.file = event.target.files[0];
+        this.files = Array.from(event.target.files);
       },
       async uploadFile() {
-        if (!this.file) {
+        if (!this.files.length === 0) {
           this.error = 'Por favor, selecione um arquivo';
           return;
         }
   
         let formData = new FormData();
-        formData.append('file', this.file);
+        this.files.forEach(file => {
+          formData.append('files[]', file);
+        });
         formData.append('id', this.user.id);
   
         this.$loading.show()
@@ -71,8 +78,8 @@
               'Content-Type': 'multipart/form-data'
             }
           });
+          console.log(response.status)
 
-          this.uploadPath = response.data.path;
           this.message    = response.data.message;
           this.error      = null;
 
