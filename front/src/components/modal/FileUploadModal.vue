@@ -15,9 +15,11 @@
     <div v-if="message" class="alert alert-success" role="alert">
       <p>{{ message }}</p>
 
-      <p>
+      <p v-if="errorMultimidia">
         OBSERVAÇÕES: <br>
-        <span></span>
+        <span v-for="(item, key) in errorMultimidia.erro" :key="key">
+          {{ item }} <br>
+        </span>
       </p>
     </div>
 
@@ -78,7 +80,10 @@
               'Content-Type': 'multipart/form-data'
             }
           });
-          console.log(response.status)
+         
+          if(response.status == 207){
+            this.errorMultimidia = response.data.erros;
+          }
 
           this.message    = response.data.message;
           this.error      = null;

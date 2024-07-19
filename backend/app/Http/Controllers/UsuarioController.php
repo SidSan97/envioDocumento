@@ -13,6 +13,7 @@ class UsuarioController extends Controller
     public function envioDocumento(Request $request)
     {
         $erros = ['erro' => []];
+        $error = false;
 
         if (request()->hasFile('files')) {
 
@@ -23,14 +24,18 @@ class UsuarioController extends Controller
                 $upload = $doc->upload($arquivo);
 
                 if(isset($upload['error'])) {
-                    return response()->json(['error' => $upload['error']], $upload['status']);
+                    //return response()->json(['error' => $upload['error']], $upload['status']);
+                    $erros['erro'][] = $upload['error'].": " . $arquivo->getClientOriginalName();
+                    $error = true;
+                    continue;
                 }
 
                 //*********************************** */
                 $dadosPDF = $doc->lerDadosPDF($upload['diretorio']);
 
                 if(!$dadosPDF) {
-                    $erros['erro'][] = "Não foi possível ler o seguinte PDF:" . $arquivo->getClientOriginalName();
+                    $erros['erro'][] = "Não foi possível ler o seguinte PDF: " . $arquivo->getClientOriginalName();
+                    $error = true;
                     continue;
                 }
 
@@ -40,6 +45,7 @@ class UsuarioController extends Controller
                 if(!$dadosCliente) {
                     //return response()->json(['error' => 'Você não possui clientes com esse CNPJ/CPF cadastrado no sistema.'], 404);
                     $erros['erro'][] = "Você não possui clientes com esse CNPJ/CPF cadastrado no sistema para o CPF/CNPJ: " . $dadosPDF['documento'];
+                    $error = true;
                     continue;
                 }
 
@@ -64,8 +70,9 @@ class UsuarioController extends Controller
                 $doc->cadastrarPDF($upload['diretorio'], $dadosCliente['id_cliente'], $request->id);
             }
 
-            if(sizeof($erros) > 0)
+            if($error){
                 return response()->json(['message' => 'Não foi possível enviar alguns arquivos', 'erros'=> $erros], 207);
+            }
 
             return response()->json(['message' => 'Documento(s) enviado com sucesso'], 200);
         }
