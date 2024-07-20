@@ -14,6 +14,7 @@ class UsuarioController extends Controller
     {
         $erros = ['erro' => []];
         $error = false;
+        $teste = '';
 
         if (request()->hasFile('files')) {
 
@@ -22,6 +23,7 @@ class UsuarioController extends Controller
                 $doc = new DocumentosController();
 
                 $upload = $doc->upload($arquivo);
+                $teste = $arquivo->getClientOriginalName();
 
                 if(isset($upload['error'])) {
                     //return response()->json(['error' => $upload['error']], $upload['status']);
@@ -60,6 +62,7 @@ class UsuarioController extends Controller
 
                 $pathToFile = Storage::path('public\\' . $upload['diretorio']);
 
+
                 Mail::raw($dados['message'], function ($message) use ($dados, $pathToFile) {
                     $message->from($dados['fromEmail'], $dados['fromName']);
                     $message->to($dados['recipientEmail'], $dados['recipientName'])
@@ -74,7 +77,7 @@ class UsuarioController extends Controller
                 return response()->json(['message' => 'Não foi possível enviar alguns arquivos', 'erros'=> $erros], 207);
             }
 
-            return response()->json(['message' => 'Documento(s) enviado com sucesso'], 200);
+            return response()->json(['message' => 'Documento(s) enviado com sucesso', 'dado' => $teste], 200);
         }
 
         return response()->json(['error' => 'Não há arquivos para upload.'], 400);
