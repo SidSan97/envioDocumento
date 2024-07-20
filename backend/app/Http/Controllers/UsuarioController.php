@@ -16,12 +16,9 @@ class UsuarioController extends Controller
         $error = false;
         $teste = '';
 
-        if (request()->hasFile('files')) {
-
-            foreach(request()->file('files') as $arquivo) {
-
+        if ($request->hasFile('files')) {
+            foreach($request->file('files') as $arquivo) {
                 $doc = new DocumentosController();
-
                 $upload = $doc->upload($arquivo);
                 $teste = $arquivo->getClientOriginalName();
 
@@ -29,7 +26,7 @@ class UsuarioController extends Controller
                     //return response()->json(['error' => $upload['error']], $upload['status']);
                     $erros['erro'][] = $upload['error'].": " . $arquivo->getClientOriginalName();
                     $error = true;
-                    continue;
+                   continue;
                 }
 
                 //*********************************** */
