@@ -3,6 +3,7 @@ import {useAuthStore} from '../stores/auth'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import ReportView from '../views/ReportView.vue'
+import ChangePasswordView from '../views/ChangePasswordView.vue'
 
 const routes = [
   { 
@@ -16,6 +17,10 @@ const routes = [
   { 
     path: '/relatorio', 
     component: ReportView
+  },
+  { 
+    path: '/alterar-senha', 
+    component: ChangePasswordView
   },
 ];
 

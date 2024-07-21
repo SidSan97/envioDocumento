@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\ClienteModel;
 use App\Models\DocumentoModel;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,13 +16,11 @@ class UsuarioController extends Controller
     {
         $erros = ['erro' => []];
         $error = false;
-        $teste = '';
 
         if ($request->hasFile('files')) {
             foreach($request->file('files') as $arquivo) {
                 $doc = new DocumentosController();
                 $upload = $doc->upload($arquivo);
-                $teste = $arquivo->getClientOriginalName();
 
                 if(isset($upload['error'])) {
                     //return response()->json(['error' => $upload['error']], $upload['status']);
@@ -59,7 +59,6 @@ class UsuarioController extends Controller
 
                 $pathToFile = Storage::path('public\\' . $upload['diretorio']);
 
-
                 Mail::raw($dados['message'], function ($message) use ($dados, $pathToFile) {
                     $message->from($dados['fromEmail'], $dados['fromName']);
                     $message->to($dados['recipientEmail'], $dados['recipientName'])
@@ -74,7 +73,7 @@ class UsuarioController extends Controller
                 return response()->json(['message' => 'Não foi possível enviar alguns arquivos', 'erros'=> $erros], 207);
             }
 
-            return response()->json(['message' => 'Documento(s) enviado com sucesso', 'dado' => $teste], 200);
+            return response()->json(['message' => 'Documento(s) enviado com sucesso'], 200);
         }
 
         return response()->json(['error' => 'Não há arquivos para upload.'], 400);
@@ -92,5 +91,29 @@ class UsuarioController extends Controller
         });
 
         return $documentos;
+    }
+
+    public function cadastrarLoginCliente($dados)
+    {
+        $user = new User();
+
+        $user->name = $dados->nome;
+        $user->email = $dados->email;
+        $user->password = Hash::make('1234');
+        $user->id_cargo = 4;
+        $user->first_login = 1;
+
+        if(!$user->save()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function alterarSenha(Request $request)
+    {
+        $user = User::where('id_user', $request->id);
+
+        $user->password = Hash::make($request->password);
     }
 }

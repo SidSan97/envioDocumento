@@ -22,6 +22,14 @@ class ClienteController extends Controller
             return  response()->json([ 'error' => "Falha ao cadastrar cliente"], 500);
         }
 
+        $user = new UsuarioController();
+
+        $cadLogin = $user->cadastrarLoginCliente($request);
+
+        if(!$cadLogin){
+            return  response()->json([ 'error' => "Falha ao cadastrar cliente"], 500);
+        }
+
         return  response()->json([ 'message' => "Cliente cadastrado com sucesso"], 201);
     }
 

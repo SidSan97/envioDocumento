@@ -48,8 +48,13 @@ export default {
         async login() {
             this.$loading.show()
             try {
-                await this.authStore.login(this.email, this.password);
-                this.router.push('/');
+                const response = await this.authStore.login(this.email, this.password);
+                
+                if(response.user.first_login == 1)
+                    this.router.push('/alterar-senha');
+                else
+                    this.router.push('/');
+                
             } catch (err) {
                 this.error = 'Email ou senha incorretos.'; 
             }finally {
