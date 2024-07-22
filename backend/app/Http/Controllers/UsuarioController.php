@@ -112,8 +112,18 @@ class UsuarioController extends Controller
 
     public function alterarSenha(Request $request)
     {
-        $user = User::where('id_user', $request->id);
+        if($request->senha !== $request->senha2) {
+            return response()->json(['error' => "A senhas são diferentes."], 400);
+        }
 
-        $user->password = Hash::make($request->password);
+        $user = User::where('id_user', $request->id)->first();
+        $user->password = Hash::make($request->senha);
+        $user->first_login = 0;
+
+        if(!$user->save()) {
+            return response()->json(['error' => "Não foi possível alterar senha. Tente novamente."], 500);
+        }
+
+        return response()->json(['message' => "Senha alterada com sucesso!"], 200);
     }
 }

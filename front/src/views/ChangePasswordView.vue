@@ -29,6 +29,7 @@
 
 <script lang="ts">
     import axios from 'axios';
+    import { useAuthStore } from '@/stores/auth';
 
     export default {
         data() {
@@ -39,16 +40,32 @@
                 responseMessage: '',
             }
         },
+        setup() {
+            const authStore = useAuthStore();
+           
+            return {
+                user: 
+                    authStore.user,
+                    logout: authStore.logout
+            };
+        },
         methods: {
 
             async changePassword() {
+                this.$loading.show()
                 if(this.passwaord2 !== this.password) {
                     console.log("As senhas são diferentes.");
                     return;
                 }
 
+                let formData = {
+                    'senha': this.password,
+                    'senha2': this.passwaord2,
+                    'id': this.user.id
+                }
+
                 try {
-                    const response = await axios.post('http://localhost/envioDocumento/backend/public/api/alterar-senha')
+                    const response = await axios.post('http://localhost/envioDocumento/backend/public/api/alterar-senha', formData)
                     this.responseMessage = response.data.message;
 
                 } catch(error: any) {
@@ -57,6 +74,9 @@
                     } else {
                         this.responseMessage = 'Erro ao enviar o formulário. Por favor, tente novamente.';
                     }
+
+                } finally {
+                    this.$loading.hide();
                 }
             },
 
@@ -69,7 +89,7 @@
                 } else {
                     this.differentsPasswords = false;
                 }
-            }
+            },
         }
     }
 </script>
