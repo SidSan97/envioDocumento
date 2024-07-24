@@ -100,7 +100,5 @@
 </script>
 
 <style scoped>
-    .modal-item {
-        background-color: #fefefe !important;
-    }
+   
 </style>

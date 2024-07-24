@@ -49,7 +49,7 @@
                 <tr v-for="(item, key) in documents" :key="key">
                     <th scope="row">{{ key + 1 }}</th>
                     <td>
-                        <a :href="'http://localhost/envioDocumento/backend/public/storage/' + item.nome_doc" target="_blank" rel="noopener noreferrer">
+                        <a :href="url + '/backend/public/storage/' + item.nome_doc" target="_blank" rel="noopener noreferrer">
                             Ver documento
                         </a>
                     </td>
@@ -79,6 +79,7 @@
                 year: 0,
                 month: 0,
                 filter: false,
+                url: window.location.protocol + '//' + window.location.host + window.location.pathname
             }
         },
         setup() {

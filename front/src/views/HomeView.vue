@@ -1,27 +1,27 @@
 <template>
 
   <div class="container">
-    <h1>Escolha uma opção</h1>
+    <h2 class="title">Escolha uma opção</h2>
 
-    <div class="row w-100">
-      <div class="col-lg-3 p-3 bg-success">
-        <div class="mb-4 menu-painel" @click="modalCadastroCliente()">         
+    <div class="row w-100 mb-2">
+      <div class="col-lg-3 p-3">
+        <div class="mb-4 bg-success menu-painel" @click="modalCadastroCliente()">         
           <i class="fas fa-rss-square"></i>
           <br>
           <span>CADASTRAR CLIENTE</span>
         </div>
       </div>
 
-      <div class="col-lg-3 p-3 bg-danger">
-        <div class="mb-4 menu-painel" @click="modalFileUpload()">         
+      <div class="col-lg-3 p-3">
+        <div class="mb-4 bg-danger menu-painel" @click="modalFileUpload()">         
           <i class="fas fa-rss-square"></i>
           <br>
           <span>ENVIAR DECLARAÇÃO</span>
         </div>
       </div>
 
-      <div class="col-lg-3 p-3 bg-warning">
-        <div class="mb-4 menu-painel" @click="modalOptions()">         
+      <div class="col-lg-3 p-3">
+        <div class="mb-4 bg-warning menu-painel" @click="modalOptions()">         
           <i class="fas fa-rss-square"></i>
           <br>
           <span>OPÇÕES</span>
@@ -72,11 +72,11 @@ export default {
       pushModal(CadastrarClienteModal)
     },
 
-    modalFileUpload(){
+    modalFileUpload() {
       pushModal(FileUploadModal)
     },
 
-    modalOptions(){
+    modalOptions() {
       pushModal(UserOptionsModal)
     },
   }
@@ -84,5 +84,18 @@ export default {
 </script>
 
 <style scoped>
+  .title{
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
 
+  .menu-painel {
+    align-items: center;
+    /* justify-content: center; */
+    flex-direction: column;
+    display: flex;
+    height: 190px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 </style>

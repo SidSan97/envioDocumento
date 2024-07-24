@@ -126,4 +126,20 @@ class UsuarioController extends Controller
 
         return response()->json(['message' => "Senha alterada com sucesso!"], 200);
     }
+
+    public function listarColaboradores()
+    {
+        $colaborador = User::select('id_user', 'name', 'email')
+                            ->where('id_cargo', 4)
+                            ->get();
+
+        $colaborador->transform(function ($item) {
+            $dadosCliente = ClienteModel::where('id_user', $item['id_user'])->get()->first();
+            $item['cliente'] = $dadosCliente;
+
+            return $item;
+        });
+
+        return $colaborador;
+    }
 }

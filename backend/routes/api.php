@@ -23,6 +23,7 @@ Route::post('/cadastrar-cliente', [ClienteController::class, 'cadastro']);
 Route::post('/enviar-documento', [UsuarioController::class, 'envioDocumento']);
 Route::get('/obter-documentos/{id}', [UsuarioController::class, 'obterDocumentos']);
 Route::post('/alterar-senha', [UsuarioController::class, 'alterarSenha']);
+Route::get('/listar-colaboradores', [UsuarioController::class, 'listarColaboradores']);
 
 Route::post('/login', function (Request $request) {
     $credentials = $request->only('email', 'password');

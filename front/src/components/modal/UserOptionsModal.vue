@@ -9,7 +9,7 @@
 
         <div>
             <router-link to="/relatorio">Relatório</router-link>
-            <router-link to="/relatorio">Meus Clientes</router-link>
+            <a href="/menu-clientes">Meus Clientes</a>
         </div>
     </div>
 </template>

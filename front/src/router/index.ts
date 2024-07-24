@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import ReportView from '../views/ReportView.vue'
 import ChangePasswordView from '../views/ChangePasswordView.vue'
+import MyClientsMenuView from '../views/MyClientsMenuView.vue'
 
 const routes = [
   { 
@@ -21,6 +22,10 @@ const routes = [
   { 
     path: '/alterar-senha', 
     component: ChangePasswordView
+  },
+  { 
+    path: '/menu-clientes', 
+    component: MyClientsMenuView
   },
 ];
 
