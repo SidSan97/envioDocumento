@@ -17,7 +17,12 @@
                     <td>{{ item.name }}</td>
                     <td>{{ item.email }}</td>
                     <td>
-                        <button class="btn btn-success" @click="modalOptions()">Opções</button>
+                        <button class="btn btn-success mr-3">
+                            <a :href="'detalhes-cliente/' + item.id_user" target="_blank" rel="noopener noreferrer">Ver dados</a>
+                        </button>
+                        <button class="btn btn-danger">
+                            Excluir
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -66,9 +71,9 @@
                 }
             },
 
-            modalOptions() {
+            /*modalOptions() {
                 pushModal(modalOtions);
-            }
+            }*/
         },
     }
 </script>

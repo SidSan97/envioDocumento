@@ -142,4 +142,11 @@ class UsuarioController extends Controller
 
         return $colaborador;
     }
+
+    public function listarClientes(int $id)
+    {
+        $cliente = ClienteModel::where('id_user', $id)->get();
+
+        return response()->json(['data'=>$cliente], 200);
+    }
 }

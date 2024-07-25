@@ -24,12 +24,12 @@ Route::post('/enviar-documento', [UsuarioController::class, 'envioDocumento']);
 Route::get('/obter-documentos/{id}', [UsuarioController::class, 'obterDocumentos']);
 Route::post('/alterar-senha', [UsuarioController::class, 'alterarSenha']);
 Route::get('/listar-colaboradores', [UsuarioController::class, 'listarColaboradores']);
+Route::get('/listar-clientes/{id}', [UsuarioController::class, 'listarClientes']);
 
 Route::post('/login', function (Request $request) {
     $credentials = $request->only('email', 'password');
 
     $user = User::where('email', $credentials['email'])->first();
-
 
     if (!$user || !Hash::check($credentials['password'], $user->password)) {
         return response()->json(['message' => 'Credenciais Inválidas'], 401);

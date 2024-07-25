@@ -5,6 +5,7 @@ import LoginView from '../views/LoginView.vue'
 import ReportView from '../views/ReportView.vue'
 import ChangePasswordView from '../views/ChangePasswordView.vue'
 import MyClientsMenuView from '../views/MyClientsMenuView.vue'
+import ShowClientsView from '@/views/ShowClientsView.vue'
 
 const routes = [
   { 
@@ -26,6 +27,10 @@ const routes = [
   { 
     path: '/menu-clientes', 
     component: MyClientsMenuView
+  },
+  { 
+    path: '/detalhes-cliente/:id?',
+   component: ShowClientsView 
   },
 ];
 
