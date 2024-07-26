@@ -6,6 +6,15 @@
         <button class="btn btn-warning">
             <a href="/" class="nav-link mb-4 text-dark">Voltar</a>
         </button>
+
+        <div style="border: 1px solid silver; border-radius: 5px; padding: 15px;">
+            <h3>Contador responsavél: <span class="text-danger">{{ item.name }}</span></h3>
+            <p>Email: {{ item.email }}</p> 
+            <p>Quantidade de clientes: {{ item.qtdClientes }}</p>
+            <p>Quantidade de E-mails enviados: {{ item.qtdDocEnviados }}</p>
+        </div>
+
+        <br> <h3 align="center">Clientes do colaborador </h3> <br>
         
         <table class="table table-striped table-bordered">
             <thead class="thead-dark">
@@ -54,6 +63,12 @@
                 clients: [],
             }
         },
+        props: {
+            item: {
+                type: Object,
+                default: () => ({})
+            }
+        },
         created() {
             this.load();
         },
@@ -88,7 +103,9 @@
             showModalEdit(data: any) {
 
                 pushModal(EditClientsModal, {clientData: data});
-            }
+            },
+
+            
         }
     }
 </script>

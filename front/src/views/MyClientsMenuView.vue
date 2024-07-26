@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 p-3 bg-success">
+            <div class="col-lg-6 p-3 bg-success">
                 <div class="mb-4 menu-painel" @click="listCollaboratorsModal()">         
                     <i class="fas fa-rss-square"></i>
                     <br>
@@ -9,8 +9,12 @@
                 </div>
             </div>
 
-            <div class="col-lg-6">
-                oi 2
+            <div class="col-lg-6 p-3 bg-primary">
+                <div class="mb-4 menu-painel" @click="listCollaboratorsModal()">         
+                    <i class="fas fa-rss-square"></i>
+                    <br>
+                    <span>Cadastrar Colaborador</span>
+                </div>
             </div>
         </div>
     </div>

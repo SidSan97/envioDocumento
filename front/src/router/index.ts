@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory} from 'vue-router'
 import {useAuthStore} from '../stores/auth'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
@@ -6,6 +6,7 @@ import ReportView from '../views/ReportView.vue'
 import ChangePasswordView from '../views/ChangePasswordView.vue'
 import MyClientsMenuView from '../views/MyClientsMenuView.vue'
 import ShowClientsView from '@/views/ShowClientsView.vue'
+import { decode } from '@/utils/encodeDecode'
 
 const routes = [
   { 
@@ -30,7 +31,8 @@ const routes = [
   },
   { 
     path: '/detalhes-cliente/:id?',
-   component: ShowClientsView 
+    component: ShowClientsView,
+    props: route => ({ id: route.params.id, item: route.query.item ? decode(route.query.item) : {} }),
   },
 ];
 

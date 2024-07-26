@@ -1,5 +1,10 @@
 <template>
     <div>
+        <ModalHeader
+            :title="'Upload de arquivos'"
+            @close="$emit('close')"
+        />
+
         <h1>Lista de Colaboradores</h1>
 
         <table class="table">
@@ -18,7 +23,7 @@
                     <td>{{ item.email }}</td>
                     <td>
                         <button class="btn btn-success mr-3">
-                            <a :href="'detalhes-cliente/' + item.id_user" target="_blank" rel="noopener noreferrer">Ver dados</a>
+                            <router-link :to="{ path: 'detalhes-cliente/' + item.id_user, query: { item: decodeItem(item) }}" target="_blank" rel="noopener noreferrer">Ver dados</router-link>
                         </button>
                         <button class="btn btn-danger">
                             Excluir
@@ -32,12 +37,17 @@
 
 <script lang="ts">
     import { useAuthStore } from '@/stores/auth';
+    import ModalHeader from '../ModalHeader.vue';
     import { useRouter } from 'vue-router';
     import { closeModal, pushModal } from 'jenesius-vue-modal';
     import axios from 'axios';
+    import { encode } from '@/utils/encodeDecode';
 
     export default {
         name: 'listCollaboratorsModal',
+        components: {
+            ModalHeader,
+        },
         data() {
             return {
                 data: [],
@@ -62,13 +72,17 @@
                 try {
                     const response = await axios.get('http://localhost/envioDocumento/backend/public/api/listar-colaboradores');
                     this.data      = response.data;
-                    console.log(this.data)
+
                 }catch(error) {
                     console.error(error);
 
                 }finally{
                     this.$loading.hide();
                 }
+            },
+
+            decodeItem(item: any) {
+                return encode(item);
             },
 
             /*modalOptions() {

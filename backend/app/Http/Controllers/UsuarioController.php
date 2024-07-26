@@ -135,7 +135,12 @@ class UsuarioController extends Controller
 
         $colaborador->transform(function ($item) {
             $dadosCliente = ClienteModel::where('id_user', $item['id_user'])->get()->first();
+            $qtdClientes = ClienteModel::where('id_user', $item['id_user'])->count();
+            $qtdDocEnviados = DocumentoModel::where('id_user', $item['id_user'])->count();
+
             $item['cliente'] = $dadosCliente;
+            $item['qtdClientes'] = $qtdClientes;
+            $item['qtdDocEnviados'] = $qtdDocEnviados;
 
             return $item;
         });
