@@ -130,7 +130,7 @@ class UsuarioController extends Controller
     public function listarColaboradores()
     {
         $colaborador = User::select('id_user', 'name', 'email')
-                            ->where('id_cargo', 4)
+                            ->where('id_cargo', 3)
                             ->get();
 
         $colaborador->transform(function ($item) {
@@ -147,6 +147,23 @@ class UsuarioController extends Controller
     {
         $cliente = ClienteModel::where('id_user', $id)->get();
 
-        return response()->json(['data'=>$cliente], 200);
+        return response()->json(['clients'=>$cliente], 200);
+    }
+
+    public function editarCliente(Request $request)
+    {
+        $cliente = ClienteModel::where('id_cliente', $request->id)->first();
+
+        $cliente->nome = $request->nome;
+        $cliente->email = $request->email;
+        $cliente->cpf_cnpj = $request->cpf_cnpj;
+        $cliente->telefone = $request->telefone;
+        $cliente->cliente_ativo = $request->cliente_ativo;
+
+        if(!$cliente->save()) {
+            return response()->json(['error'=>"Erro ao alterar dados do cliente. Tente novamente."], 500);
+        }
+
+        return response()->json(['message'=>"Cliente atualizado com sucesso!"], 200);
     }
 }

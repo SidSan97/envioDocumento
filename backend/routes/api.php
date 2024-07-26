@@ -25,6 +25,7 @@ Route::get('/obter-documentos/{id}', [UsuarioController::class, 'obterDocumentos
 Route::post('/alterar-senha', [UsuarioController::class, 'alterarSenha']);
 Route::get('/listar-colaboradores', [UsuarioController::class, 'listarColaboradores']);
 Route::get('/listar-clientes/{id}', [UsuarioController::class, 'listarClientes']);
+Route::post('/editar-cliente', [UsuarioController::class, 'editarCliente']);
 
 Route::post('/login', function (Request $request) {
     $credentials = $request->only('email', 'password');
